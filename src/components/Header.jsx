@@ -25,15 +25,25 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Prevent scrolling when mobile menu is open
+  // Prevent scrolling when mobile menu is open and change browser theme color
   useEffect(() => {
+    let metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (!metaThemeColor) {
+      metaThemeColor = document.createElement('meta');
+      metaThemeColor.name = "theme-color";
+      document.head.appendChild(metaThemeColor);
+    }
+
     if (menuOpen) {
       document.body.style.overflow = 'hidden';
+      metaThemeColor.content = '#1a73e8'; // Match var(--primary) blue overlay
     } else {
       document.body.style.overflow = 'unset';
+      metaThemeColor.content = '#ffffff';
     }
     return () => {
       document.body.style.overflow = 'unset';
+      if (metaThemeColor) metaThemeColor.content = '#ffffff';
     };
   }, [menuOpen]);
 
