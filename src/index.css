@@ -1106,10 +1106,14 @@ img {
 @media (max-width: 768px) {
   .loader-text-container {
     bottom: 40px;
-    left: 30px;
+    left: 24px;
+    right: 100px; /* Prevent overlap with percentage */
   }
   .loader-percentage-corner {
     bottom: 40px;
-    right: 30px;
+    right: 24px;
+  }
+  .loader-title, .loader-percentage-corner {
+    font-size: clamp(1.5rem, 7vw, 2.5rem); /* Smaller font on mobile */
   }
 }
