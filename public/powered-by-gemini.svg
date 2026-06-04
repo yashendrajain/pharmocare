@@ -1,0 +1,18 @@
+<svg width="240" height="80" viewBox="0 0 240 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradient Star -->
+  <g transform="translate(10, 20)">
+    <path d="M20 0 C20 11.0457 11.0457 20 0 20 C11.0457 20 20 28.9543 20 40 C20 28.9543 28.9543 20 40 20 C28.9543 20 20 11.0457 20 0 Z" fill="url(#geminiGradient)"/>
+  </g>
+  <!-- Text -->
+  <text x="60" y="32" font-family="'Inter', sans-serif" font-weight="400" font-size="22" fill="#202124">powered by</text>
+  <text x="64" y="60" font-family="'Inter', sans-serif" font-weight="600" font-size="32" fill="#202124">Gemini</text>
+  
+  <defs>
+    <linearGradient id="geminiGradient" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4285F4"/>
+      <stop offset="33%" stop-color="#EA4335"/>
+      <stop offset="66%" stop-color="#FBBC05"/>
+      <stop offset="100%" stop-color="#34A853"/>
+    </linearGradient>
+  </defs>
+</svg>
