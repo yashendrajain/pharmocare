@@ -832,7 +832,7 @@ img {
 .contact-banner {
   background: var(--primary);
   border-radius: 24px;
-  padding: 48px 24px;
+  padding: 40px 20px;
   text-align: center;
   color: #ffffff;
 }
@@ -844,7 +844,7 @@ img {
 }
 
 .contact-banner h2 {
-  font-size: clamp(2rem, 8vw, 3rem);
+  font-size: clamp(1.75rem, 8vw, 3rem);
   font-weight: 500;
   margin-bottom: 16px;
   letter-spacing: -0.02em;

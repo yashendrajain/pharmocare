@@ -13,7 +13,7 @@ export default function Contact() {
         
         <div className="contact-banner">
           <h2>
-            Get in touch with us
+            Get in touch with&nbsp;us
           </h2>
           
           <p>
