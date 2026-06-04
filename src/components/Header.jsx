@@ -36,14 +36,17 @@ export default function Header() {
 
     if (menuOpen) {
       document.body.style.overflow = 'hidden';
-      metaThemeColor.content = '#1a73e8'; // Match var(--primary) blue overlay
+      document.body.style.backgroundColor = '#1a73e8'; // Force Safari tint
+      metaThemeColor.setAttribute('content', '#1a73e8');
     } else {
       document.body.style.overflow = 'unset';
-      metaThemeColor.content = '#ffffff';
+      document.body.style.backgroundColor = '#ffffff';
+      metaThemeColor.setAttribute('content', '#ffffff');
     }
     return () => {
       document.body.style.overflow = 'unset';
-      if (metaThemeColor) metaThemeColor.content = '#ffffff';
+      document.body.style.backgroundColor = '#ffffff';
+      if (metaThemeColor) metaThemeColor.setAttribute('content', '#ffffff');
     };
   }, [menuOpen]);
 
