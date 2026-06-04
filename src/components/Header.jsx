@@ -36,16 +36,19 @@ export default function Header() {
 
     if (menuOpen) {
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.backgroundColor = '#1a73e8';
       document.body.style.backgroundColor = '#1a73e8'; // Force Safari tint
       metaThemeColor.setAttribute('content', '#1a73e8');
     } else {
       document.body.style.overflow = 'unset';
-      document.body.style.backgroundColor = '#ffffff';
+      document.documentElement.style.backgroundColor = '';
+      document.body.style.backgroundColor = '';
       metaThemeColor.setAttribute('content', '#ffffff');
     }
     return () => {
       document.body.style.overflow = 'unset';
-      document.body.style.backgroundColor = '#ffffff';
+      document.documentElement.style.backgroundColor = '';
+      document.body.style.backgroundColor = '';
       if (metaThemeColor) metaThemeColor.setAttribute('content', '#ffffff');
     };
   }, [menuOpen]);
