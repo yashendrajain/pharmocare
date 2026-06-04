@@ -291,6 +291,24 @@ img {
   transform: translateX(100%);
   transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
 }
+.mobile-menu-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: #ffffff;
+  z-index: 10000;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.4s ease 0.3s, transform 0.4s ease 0.3s;
+}
+.mobile-menu-overlay.open .mobile-menu-close {
+  opacity: 1;
+  transform: scale(1);
+}
 .mobile-menu-overlay.open {
   transform: translateX(0);
 }

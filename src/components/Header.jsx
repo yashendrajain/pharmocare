@@ -115,6 +115,16 @@ export default function Header() {
 
       {/* Full Screen Mobile Nav Menu */}
       <div className={`mobile-menu-overlay ${menuOpen ? 'open' : ''}`}>
+        <button 
+          className="mobile-menu-close" 
+          onClick={() => setMenuOpen(false)}
+          aria-label="Close menu"
+        >
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
         <div className="mobile-menu-content">
           {navLinks.map((link, idx) => (
             <a
