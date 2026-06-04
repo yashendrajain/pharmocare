@@ -5,7 +5,7 @@ const footerLinks = {
   Product: [
     { label: 'Features', href: '/#features', isHash: true },
     { label: 'FAQ', href: '/#faq', isHash: true },
-    { label: 'Download', href: 'https://play.google.com/store', isExternal: true },
+    { label: 'Download', href: '/pharmocare.apk', isExternal: true, download: 'PharmoCare.apk' },
   ],
   Legal: [
     { label: 'Contact', href: '/#contact', isHash: true },
@@ -61,6 +61,7 @@ export default function Footer() {
                           href={link.href}
                           target="_blank"
                           rel="noopener noreferrer"
+                          download={link.download}
                         >
                           {link.label}
                         </a>

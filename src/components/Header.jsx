@@ -154,13 +154,12 @@ export default function Header() {
             </a>
           ))}
           <a
-            href="https://play.google.com/store"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/pharmocare.apk"
+            download="PharmoCare.apk"
             className="mobile-nav-link mobile-nav-cta"
             style={{ animationDelay: `${0.1 + navLinks.length * 0.05}s` }}
           >
-            Download App
+            Download APK
           </a>
         </div>
       </div>

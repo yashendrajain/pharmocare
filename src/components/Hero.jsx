@@ -27,12 +27,11 @@ export default function Hero() {
 
             <div className="hero-actions">
               <a
-                href="https://play.google.com/store"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/pharmocare.apk"
+                download="PharmoCare.apk"
                 className="btn-primary"
               >
-                Get it on Google Play
+                Download APK
               </a>
               <a
                 href="#features"
