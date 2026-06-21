@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { supabase } from '../lib/supabaseClient';
 
 const navLinks = [
   { label: 'Home', href: '/' },
@@ -13,6 +14,7 @@ const navLinks = [
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [session, setSession] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -23,6 +25,19 @@ export default function Header() {
 
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Fetch session on mount and subscribe to changes
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   // Prevent scrolling when mobile menu is open and change browser theme color
@@ -104,15 +119,33 @@ export default function Header() {
             </nav>
 
             {/* Desktop CTA */}
-            <div className="header-cta">
+            <div className="header-cta" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <a
                 href="https://play.google.com/store"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary"
+                className="btn-secondary"
+                style={{ padding: '8px 16px', fontSize: '0.875rem', height: '38px', display: 'flex', alignItems: 'center' }}
               >
-                Get the App
+                Get App
               </a>
+              {session ? (
+                <Link
+                  to="/app/dashboard"
+                  className="btn-primary"
+                  style={{ padding: '8px 20px', fontSize: '0.875rem', height: '38px', display: 'flex', alignItems: 'center' }}
+                >
+                  Dashboard
+                </Link>
+              ) : (
+                <Link
+                  to="/auth"
+                  className="btn-primary"
+                  style={{ padding: '8px 20px', fontSize: '0.875rem', height: '38px', display: 'flex', alignItems: 'center' }}
+                >
+                  Sign In
+                </Link>
+              )}
             </div>
 
             {/* Mobile Hamburger */}
@@ -153,11 +186,31 @@ export default function Header() {
               {link.label}
             </a>
           ))}
+          {session ? (
+            <Link
+              to="/app/dashboard"
+              className="mobile-nav-link mobile-nav-cta"
+              style={{ animationDelay: `${0.1 + navLinks.length * 0.05}s` }}
+              onClick={() => setMenuOpen(false)}
+            >
+              Dashboard
+            </Link>
+          ) : (
+            <Link
+              to="/auth"
+              className="mobile-nav-link mobile-nav-cta"
+              style={{ animationDelay: `${0.1 + navLinks.length * 0.05}s` }}
+              onClick={() => setMenuOpen(false)}
+            >
+              Sign In
+            </Link>
+          )}
           <a
             href="/pharmocare.apk"
             download="PharmoCare.apk"
-            className="mobile-nav-link mobile-nav-cta"
-            style={{ animationDelay: `${0.1 + navLinks.length * 0.05}s` }}
+            className="mobile-nav-link"
+            style={{ animationDelay: `${0.15 + navLinks.length * 0.05}s`, opacity: 0.8 }}
+            onClick={() => setMenuOpen(false)}
           >
             Download APK
           </a>
