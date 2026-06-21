@@ -103,7 +103,7 @@ export default function Firms() {
   );
 
   return (
-    <div className="dashboard-page boltshift-theme">
+    <div className="dashboard-page boltshift-theme fade-in-up">
       {/* Title Bar (Boltshift Style) */}
       <div className="dashboard-title-bar">
         <div>
@@ -160,11 +160,11 @@ export default function Firms() {
                 </div>
                 
                 <div className="card-body-row" style={{ marginTop: '8px', borderBottom: '1px solid var(--outline)', paddingBottom: '16px' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>GSTIN: {firm.gst_number || 'N/A'}</span>
-                    {firm.phone && <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Phone: {firm.phone}</span>}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', minWidth: 0, flex: 1, marginRight: '12px' }}>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', wordBreak: 'break-all' }}>GSTIN: {firm.gst_number || 'N/A'}</span>
+                    {firm.phone && <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', wordBreak: 'break-word' }}>Phone: {firm.phone}</span>}
                   </div>
-                  <div style={{ textAlign: 'right' }}>
+                  <div style={{ textAlign: 'right', flexShrink: 0 }}>
                     <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', display: 'block' }}>Outstanding</span>
                     <span className={firm.outstanding_balance > 0 ? 'debit' : 'credit'} style={{ fontWeight: 700, fontSize: '1.2rem' }}>
                       ₹{Number(firm.outstanding_balance).toLocaleString('en-IN')}

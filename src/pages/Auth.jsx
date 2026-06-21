@@ -88,7 +88,7 @@ export default function Auth() {
   };
 
   return (
-    <div className="auth-container">
+    <div className="auth-container fade-in-up">
       {/* Back button to homepage */}
       <Link to="/" className="auth-back-home">
         <ArrowLeft size={16} />

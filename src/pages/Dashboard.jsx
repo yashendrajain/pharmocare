@@ -163,7 +163,7 @@ export default function Dashboard() {
   );
 
   return (
-    <div className="dashboard-page boltshift-theme">
+    <div className="dashboard-page boltshift-theme fade-in-up">
       {/* Title bar (Boltshift style) */}
       <div className="dashboard-title-bar">
         <div>

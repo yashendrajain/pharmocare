@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate, Link, useLocation } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
-import { LayoutDashboard, Building2, LogOut, Bell, Settings } from 'lucide-react';
+import { LayoutDashboard, Building2, LogOut, Bell, Menu, X } from 'lucide-react';
 
 export default function DashboardLayout() {
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   
   const navigate = useNavigate();
   const location = useLocation();
@@ -41,14 +42,18 @@ export default function DashboardLayout() {
     } = supabase.auth.onAuthStateChange((event, session) => {
       if (!isMounted) return;
       setSession(session);
-      setLoading(false);
       
       if (session) {
+        setLoading(false);
         if (location.pathname === '/auth') {
           navigate('/app/dashboard');
         }
       } else {
-        navigate('/auth');
+        // Only redirect to /auth if we are NOT in the middle of a redirect callback
+        if (!isCallbackFlow) {
+          navigate('/auth');
+          setLoading(false);
+        }
       }
     });
 
@@ -56,9 +61,13 @@ export default function DashboardLayout() {
     let fallbackTimer;
     if (isCallbackFlow) {
       fallbackTimer = setTimeout(() => {
-        if (isMounted && loading) {
-          navigate('/auth');
-          setLoading(false);
+        if (isMounted) {
+          supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
+            if (!currentSession) {
+              navigate('/auth');
+              setLoading(false);
+            }
+          });
         }
       }, 4000);
     }
@@ -71,7 +80,12 @@ export default function DashboardLayout() {
   }, [navigate, location.pathname]);
 
   const handleLogout = async () => {
+    setDrawerOpen(false);
     await supabase.auth.signOut();
+  };
+
+  const handleNavClick = () => {
+    setDrawerOpen(false);
   };
 
   if (loading) {
@@ -90,17 +104,13 @@ export default function DashboardLayout() {
       {/* Top Header Navigation (Boltshift Style) */}
       <header className="dashboard-top-header">
         <div className="top-header-inner">
-          {/* Logo (Boltshift Style Lightning Bolt) */}
+          {/* Logo (Official App Icon) */}
           <div className="brand" onClick={() => navigate('/app/dashboard')} style={{ cursor: 'pointer' }}>
-            <div className="brand-logo-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a73e8" strokeWidth="2.5">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-              </svg>
-            </div>
+            <img src="/icon.jpg" alt="PharmoCare Logo" className="dashboard-logo-img" />
             <span className="brand-name">PharmoCare</span>
           </div>
 
-          {/* Navigation Pills (Center) */}
+          {/* Navigation Pills (Center - Desktop) */}
           <nav className="top-nav-pills">
             {navItems.map((item) => {
               const isActive = location.pathname.startsWith(item.path);
@@ -116,7 +126,7 @@ export default function DashboardLayout() {
             })}
           </nav>
 
-          {/* Controls & User Profile Widget (Right) */}
+          {/* Controls & User Profile Widget (Right - Desktop) */}
           <div className="top-profile-section">
             <button className="icon-btn-circle" title="Notifications">
               <Bell size={18} />
@@ -133,8 +143,78 @@ export default function DashboardLayout() {
               </div>
             </div>
           </div>
+
+          {/* Hamburger Drawer Toggle Button (Mobile) */}
+          <button 
+            className="mobile-drawer-toggle" 
+            onClick={() => setDrawerOpen(true)}
+            aria-label="Open menu"
+          >
+            <Menu size={24} />
+          </button>
         </div>
       </header>
+
+      {/* Mobile Drawer Overlay */}
+      {drawerOpen && (
+        <div className="drawer-overlay" onClick={() => setDrawerOpen(false)} />
+      )}
+
+      {/* Mobile Drawer Sidebar Navigation */}
+      <div className={`mobile-drawer ${drawerOpen ? 'open' : ''}`}>
+        <div className="drawer-header">
+          <div className="brand" onClick={() => { navigate('/app/dashboard'); setDrawerOpen(false); }} style={{ cursor: 'pointer' }}>
+            <img src="/icon.jpg" alt="PharmoCare Logo" className="dashboard-logo-img" />
+            <span className="brand-name">PharmoCare</span>
+          </div>
+          <button className="drawer-close-btn" onClick={() => setDrawerOpen(false)} aria-label="Close menu">
+            <X size={24} />
+          </button>
+        </div>
+
+        <div className="drawer-content">
+          <nav className="drawer-nav-links">
+            {navItems.map((item) => {
+              const isActive = location.pathname.startsWith(item.path);
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  onClick={handleNavClick}
+                  className={`drawer-nav-item ${isActive ? 'active' : ''}`}
+                >
+                  <Icon size={18} />
+                  <span>{item.name}</span>
+                </Link>
+              );
+            })}
+          </nav>
+
+          <div className="drawer-divider" />
+
+          <div className="drawer-profile-section">
+            <div className="user-profile-widget vertical">
+              <div className="user-avatar large">{session.user.email[0].toUpperCase()}</div>
+              <div className="user-details">
+                <span className="user-name">Pharmacist</span>
+                <span className="user-email">{session.user.email}</span>
+              </div>
+            </div>
+
+            <div className="drawer-actions">
+              <button className="drawer-action-btn" title="Notifications" onClick={() => setDrawerOpen(false)}>
+                <Bell size={18} />
+                <span>Notifications</span>
+              </button>
+              <button className="drawer-action-btn logout" onClick={handleLogout} title="Sign Out">
+                <LogOut size={18} />
+                <span>Sign Out</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Main Content Container */}
       <main className="dashboard-main-content">

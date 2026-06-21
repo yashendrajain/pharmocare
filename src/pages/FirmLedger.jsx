@@ -280,7 +280,7 @@ export default function FirmLedger() {
   if (!firm) return <div className="dashboard-page">Firm not found.</div>;
 
   return (
-    <div className="dashboard-page boltshift-theme">
+    <div className="dashboard-page boltshift-theme fade-in-up">
       {/* Back navigation button */}
       <div className="ledger-header-nav" style={{ marginBottom: '16px' }}>
         <button className="back-btn" onClick={() => navigate('/app/firms')} style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'transparent', border: 'none', color: 'var(--text-secondary)', fontWeight: 600, fontSize: '0.875rem', cursor: 'pointer' }}>
