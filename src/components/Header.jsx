@@ -3,6 +3,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const navLinks = [
   { label: 'Home', href: '/' },
+  { label: 'PharmoLedger', href: '/pharmoledger' },
+  { label: 'Pathora', href: '/pathora' },
   { label: 'Features', href: '#features' },
   { label: 'FAQ', href: '#faq' },
   { label: 'Contact', href: '#contact' },
@@ -65,9 +67,9 @@ export default function Header() {
 
     const id = href.replace('#', '');
     
-    // If not on home page, navigate to home first, then scroll
-    if (location.pathname !== '/') {
-      navigate('/');
+    // If not on PharmoLedger page, navigate to /pharmoledger first, then scroll
+    if (location.pathname !== '/pharmoledger') {
+      navigate('/pharmoledger');
       setTimeout(() => {
         const el = document.getElementById(id);
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -85,22 +87,28 @@ export default function Header() {
           <div className="header-inner">
             {/* Logo */}
             <Link to="/" className="header-logo" onClick={() => { setMenuOpen(false); window.scrollTo(0,0); }}>
-              <img src="/icon.jpg" alt="PharmoCare" className="header-logo-img" />
+              <img src="/logo.png" alt="PharmoCare" className="header-logo-img" style={{ height: '36px', objectFit: 'contain' }} />
               <span className={`header-logo-name ${menuOpen ? 'menu-open-text' : ''}`}>PharmoCare</span>
             </Link>
 
             {/* Desktop Nav */}
             <nav className="header-nav">
-              {navLinks.slice(1, 4).map(link => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="nav-link"
-                  onClick={(e) => handleNavClick(e, link.href)}
-                >
-                  {link.label}
-                </a>
-              ))}
+              {navLinks.slice(0, 6).map(link => {
+                const isActive = link.href.startsWith('/') 
+                  ? location.pathname === link.href 
+                  : location.pathname === '/pharmoledger' && location.hash === link.href;
+                
+                return (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    className={`nav-link ${isActive ? 'active' : ''}`}
+                    onClick={(e) => handleNavClick(e, link.href)}
+                  >
+                    {link.label}
+                  </a>
+                );
+              })}
             </nav>
 
             {/* Desktop CTA */}
@@ -142,7 +150,7 @@ export default function Header() {
           </svg>
         </button>
         <div className="mobile-menu-content">
-          {navLinks.map((link, idx) => (
+          {navLinks.slice(0, 8).map((link, idx) => (
             <a
               key={link.label}
               href={link.href}
@@ -155,10 +163,9 @@ export default function Header() {
           ))}
           <a
             href="https://play.google.com/store/apps/details?id=com.pharmocare.medicalledger"
-            target="_blank"
-            rel="noopener noreferrer"
+            target="_blank; rel=noopener noreferrer"
             className="mobile-nav-link mobile-nav-cta"
-            style={{ animationDelay: `${0.1 + navLinks.length * 0.05}s` }}
+            style={{ animationDelay: `${0.1 + 8 * 0.05}s` }}
           >
             Google Play Store
           </a>

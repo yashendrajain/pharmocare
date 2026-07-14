@@ -6,6 +6,8 @@ import PageLoader from './components/PageLoader';
 
 // Pages
 import Home from './pages/Home';
+import PharmoLedger from './pages/PharmoLedger';
+import Pathora from './pages/Pathora';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsConditions from './pages/TermsConditions';
 
@@ -17,6 +19,8 @@ export default function App() {
       <PageLoader>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/pharmoledger" element={<PharmoLedger />} />
+          <Route path="/pathora" element={<Pathora />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsConditions />} />
         </Routes>

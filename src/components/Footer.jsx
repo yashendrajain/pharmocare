@@ -3,14 +3,16 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const footerLinks = {
   Product: [
-    { label: 'Features', href: '/#features', isHash: true },
-    { label: 'FAQ', href: '/#faq', isHash: true },
+    { label: 'PharmoLedger', href: '/pharmoledger' },
+    { label: 'Pathora Diagnostics', href: '/pathora' },
     { label: 'Google Play Store', href: 'https://play.google.com/store/apps/details?id=com.pharmocare.medicalledger', isExternal: true },
   ],
   Legal: [
-    { label: 'Contact', href: '/#contact', isHash: true },
+    { label: 'Features', href: '/pharmoledger#features', isHash: true },
+    { label: 'FAQ', href: '/pharmoledger#faq', isHash: true },
+    { label: 'Contact', href: '/pharmoledger#contact', isHash: true },
     { label: 'Privacy Policy', href: '/privacy' },
-    { label: 'Terms of Conditions', href: '/terms' },
+    { label: 'Terms & Conditions', href: '/terms' },
   ],
 };
 
@@ -20,10 +22,10 @@ export default function Footer() {
 
   const handleHashClick = (e, href) => {
     e.preventDefault();
-    const id = href.replace('/#', '');
+    const id = href.split('#')[1];
     
-    if (location.pathname !== '/') {
-      navigate('/');
+    if (location.pathname !== '/pharmoledger') {
+      navigate('/pharmoledger');
       setTimeout(() => {
         const el = document.getElementById(id);
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -41,11 +43,11 @@ export default function Footer() {
         <div className="footer-top">
           <div className="footer-brand">
             <div className="footer-logo">
-              <img src="/icon.jpg" alt="PharmoCare Logo" />
+              <img src="/logo.png" alt="PharmoCare Logo" style={{ height: '32px', objectFit: 'contain' }} />
               <span>PharmoCare</span>
             </div>
             <p className="footer-desc">
-              Smart Ledger &amp; AI Invoice Assistant for pharmacies. Powered by Google Gemini AI.
+              Smart Healthcare Technology Suite. Automating ledgers and diagnostic assistance.
             </p>
           </div>
           
