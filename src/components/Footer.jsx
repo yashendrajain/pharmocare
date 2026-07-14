@@ -5,7 +5,7 @@ const footerLinks = {
   Product: [
     { label: 'Features', href: '/#features', isHash: true },
     { label: 'FAQ', href: '/#faq', isHash: true },
-    { label: 'Download', href: '/pharmocare.apk', isExternal: true, download: 'PharmoCare.apk' },
+    { label: 'Google Play Store', href: 'https://play.google.com/store/apps/details?id=com.pharmocare.medicalledger', isExternal: true },
   ],
   Legal: [
     { label: 'Contact', href: '/#contact', isHash: true },

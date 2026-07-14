@@ -106,7 +106,7 @@ export default function Header() {
             {/* Desktop CTA */}
             <div className="header-cta">
               <a
-                href="https://play.google.com/store"
+                href="https://play.google.com/store/apps/details?id=com.pharmocare.medicalledger"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary"
@@ -154,12 +154,13 @@ export default function Header() {
             </a>
           ))}
           <a
-            href="/pharmocare.apk"
-            download="PharmoCare.apk"
+            href="https://play.google.com/store/apps/details?id=com.pharmocare.medicalledger"
+            target="_blank"
+            rel="noopener noreferrer"
             className="mobile-nav-link mobile-nav-cta"
             style={{ animationDelay: `${0.1 + navLinks.length * 0.05}s` }}
           >
-            Download APK
+            Google Play Store
           </a>
         </div>
       </div>
